@@ -1,10 +1,11 @@
 'use strict'
 
-const { messages, ruleName } = require('../index.js')
+const { messages, ruleName } = require('./index.js')
 
 testRule({
   ruleName,
   config: [true],
+  plugins: ['./index.js'],
   accept: [
     {
       code: '@media (color-gamut: p3) { a { color: lch(48% 82 283); } }',
