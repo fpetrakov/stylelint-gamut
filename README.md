@@ -33,3 +33,5 @@ Add `stylelint-gamut` to your Stylelint config `plugins` array, then add rules y
 ## Rules
 
 * [`color-no-out-gamut-range`](./src/README.md): Throw warning if color goes out of sRGB color space and is not wrapped in @media (color-gamut: p3) {}.
+
+[Stylelint]: https://stylelint.io/
