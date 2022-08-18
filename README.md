@@ -24,12 +24,12 @@ Add `stylelint-gamut` to your Stylelint config `plugins` array, then add rules y
 
 ```json
 {
-	"plugins": [
-		"stylelint-gamut"
-	],
-	"rules": {
-		"gamut/color-no-out-gamut-range": true,
-	}
+  "plugins": [
+    "stylelint-gamut"
+  ],
+  "rules": {
+    "gamut/color-no-out-gamut-range": true,
+  }
 }
 ```
 
