@@ -3,15 +3,11 @@
 const valueParser = require('postcss-value-parser')
 const stylelint = require('stylelint')
 const Color = require('colorjs.io').default
-
-const {
-  isStandardSyntaxProperty,
-  isCustomProperty,
-  getDeclarationValue,
-  declarationValueIndex,
-  isInColorGamutP3MediaQuery,
-  isInColorGamutRec2020MediaQuery
-} = require('./utils')
+const isStandardSyntaxProperty = require('./utils/isStandardSyntaxProperty')
+const isCustomProperty = require('./utils/isCustomProperty')
+const getDeclarationValue = require('./utils/getDeclarationValue')
+const isAtRule = require('./utils/isAtRule')
+const declarationValueIndex = require('./utils/declarationValueIndex')
 
 const ruleName = 'gamut/color-no-out-gamut-range'
 
@@ -50,17 +46,13 @@ const ruleFunction = (primary) => {
           return
         }
 
-        const color = new Color(valueParser.stringify(nodes))
+        const isInSrgbGamut = new Color(valueParser.stringify(nodes)).inGamut(
+          'srgb'
+        )
 
-        const isInSrgbGamut = color.inGamut('srgb')
-        const isInP3Query = isInColorGamutP3MediaQuery(decl)
-        if (isInSrgbGamut || isInP3Query) return
+        if (isInSrgbGamut) return
 
-        const isInP3Gamut = color.inGamut('p3')
-        if (isInP3Gamut && isInP3Query) return
-
-        const isInRec2020Gamut = color.inGamut('rec2020')
-        if (isInRec2020Gamut && isInColorGamutRec2020MediaQuery(decl)) return
+        if (isInColorGamutP3MediaQuery(decl)) return
 
         const index = declarationValueIndex(decl) + node.sourceIndex
         const endIndex = index + decl.value.length
@@ -76,6 +68,20 @@ const ruleFunction = (primary) => {
       })
     })
   }
+}
+
+/**
+ * @param {import('postcss').Declaration} decl
+ * @returns {boolean}
+ */
+function isInColorGamutP3MediaQuery (decl) {
+  if (decl.parent && decl.parent.parent && isAtRule(decl.parent.parent)) {
+    const parent = decl.parent.parent
+
+    return parent.name === 'media' && parent.params === '(color-gamut: p3)'
+  }
+
+  return false
 }
 
 ruleFunction.ruleName = ruleName

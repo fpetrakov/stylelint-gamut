@@ -9,16 +9,12 @@ testRule({
   accept: [
     {
       code: '@media (color-gamut: p3) { a { color: lch(48% 82 283); } }',
-      description: 'lch out of srgb gamut but wrapped in p3 media query'
-    },
-    {
-      code: '@media (color-gamut: rec2020) { a { color: lch(48% 82 283); } }',
-      description: 'lch out of p3 gamut but wrapped in rec2020 media query'
+      description: 'lch out of srgb gamut but wrapped in media query'
     },
     {
       code: '@media (color-gamut: p3) { a { color: oklch(48% 82 283 / 73%); } }',
       description:
-        'oklch with alpha out of srgb gamut but wrapped in p3 media query'
+        'oklch with alpha out of srgb gamut but wrapped in media query'
     },
     {
       code: 'a { color: lch(50% 0 0); }',
@@ -51,15 +47,6 @@ testRule({
       column: 12,
       endLine: 1,
       endColumn: 27
-    },
-    {
-      code: '@media (color-gamut: srgb) { a { color: lch(48% 82 283); } }',
-      description: 'lch is out of srgb and wrapped in srgb media query',
-      message: messages.rejected('lch(48% 82 283)'),
-      line: 1,
-      column: 41,
-      endLine: 1,
-      endColumn: 56
     },
     {
       code: 'a { color: lch(48% 82 283 / 72%); }',
