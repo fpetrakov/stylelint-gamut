@@ -1,5 +1,6 @@
 # stylelint-gamut
 Stylelint plugin for working with different color spaces.
+Right now it's working with node version >= 16.0.0.
 
 # Installation
 
