@@ -19,6 +19,8 @@ const meta = {
   url: 'https://stylelint.io/user-guide/rules/list/color-no-out-gamut-range'
 }
 
+const COLOR_FUNCTIONS = new Set(['lch', 'lab', 'oklch', 'oklab'])
+
 /** @type {import('stylelint').Rule} */
 const ruleFunction = (primary) => {
   return (root, result) => {
@@ -40,12 +42,7 @@ const ruleFunction = (primary) => {
       parsedValue.walk((node, _index, nodes) => {
         if (node.type !== 'function') return
 
-        if (
-          node.value !== 'lch' &&
-          node.value !== 'lab' &&
-          node.value !== 'oklch' &&
-          node.value !== 'oklab'
-        ) {
+        if (!COLOR_FUNCTIONS.has(node.value)) {
           return
         }
 
