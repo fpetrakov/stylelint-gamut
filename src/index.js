@@ -20,7 +20,7 @@ const meta = {
 }
 
 /** @type {import('stylelint').Rule} */
-module.exports = stylelint.createPlugin(ruleName, (primary) => {
+const ruleFunction = (primary) => {
   return (root, result) => {
     const validOptions = stylelint.utils.validateOptions(result, ruleName, {
       actual: primary
@@ -71,7 +71,7 @@ module.exports = stylelint.createPlugin(ruleName, (primary) => {
       })
     })
   }
-})
+}
 
 /**
  * @param {import('postcss').Declaration} decl
@@ -87,6 +87,8 @@ function isInColorGamutP3MediaQuery (decl) {
   return false
 }
 
-module.exports.ruleName = ruleName
-module.exports.messages = messages
-module.exports.meta = meta
+ruleFunction.ruleName = ruleName
+ruleFunction.messages = messages
+ruleFunction.meta = meta
+
+module.exports = stylelint.createPlugin(ruleName, ruleFunction)
