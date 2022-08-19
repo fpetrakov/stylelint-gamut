@@ -35,7 +35,7 @@ const ruleFunction = (primary) => {
       if (isCustomProperty(decl.prop)) return
 
       if (decl.value.includes('lch(') || decl.value.includes('lab(')) {
-        const colors = decl.value.match(/(oklch|oklab|lab|lch)\([^\)]+\)/g)
+        const colors = decl.value.match(/(oklch|oklab|lab|lch)\([^)]+\)/g)
         if (colors) {
           for (const color of colors) {
             checkColor(color)

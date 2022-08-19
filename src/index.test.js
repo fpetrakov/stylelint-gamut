@@ -2,6 +2,7 @@
 
 const { rule: { messages, ruleName } } = require('./index.js')
 
+// eslint-disable-next-line no-undef
 testRule({
   ruleName,
   config: [true],
