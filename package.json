@@ -13,6 +13,10 @@
     "type": "git",
     "url": "git+https://github.com/fpetrakov/stylelint-gamut.git"
   },
+  "files": [
+    "src/**/*.js",
+    "!**/**/*.test.js"
+  ],
   "keywords": [
     "stylelint",
     "stylelint-plugin",
