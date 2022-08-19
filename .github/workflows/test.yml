@@ -14,8 +14,7 @@ jobs:
         node-version:
           - 18
           - 16
-    name: Node.js Latest Full
-    runs-on: ubuntu-latest
+    name: Node.js ${{ matrix.node-version }}
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
