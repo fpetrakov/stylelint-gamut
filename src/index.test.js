@@ -8,7 +8,11 @@ testRule({
   plugins: ['./index.js'],
   accept: [
     {
-      code: '@media (color-gamut: p3) { a { color: lch(48% 82 283); } }',
+      code: '@media (color-gamut:p3) { a { color: lch(48% 82 283); } }',
+      description: 'lch out of srgb gamut but wrapped in media query'
+    },
+    {
+      code: '@media (prefers-color-scheme: dark) and (color-gamut: p3) { a { color: lch(48% 82 283); } }',
       description: 'lch out of srgb gamut but wrapped in media query'
     },
     {

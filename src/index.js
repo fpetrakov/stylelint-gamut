@@ -78,7 +78,7 @@ function isInColorGamutP3MediaQuery (decl) {
   if (decl.parent && decl.parent.parent && isAtRule(decl.parent.parent)) {
     const parent = decl.parent.parent
 
-    return parent.name === 'media' && parent.params === '(color-gamut: p3)'
+    return parent.name === 'media' && /\(color-gamut:\s*p3\)/.test(parent.params)
   }
 
   return false
