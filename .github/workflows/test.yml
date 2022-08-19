@@ -15,7 +15,6 @@ jobs:
           - 18
           - 16
     name: Node.js Latest Full
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
