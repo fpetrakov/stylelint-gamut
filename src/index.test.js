@@ -62,6 +62,15 @@ testRule({
       endColumn: 27
     },
     {
+      code: 'a { --var: lch(48% 82 283); }',
+      description: 'lch',
+      message: messages.rejected('lch(48% 82 283)'),
+      line: 1,
+      column: 12,
+      endLine: 1,
+      endColumn: 27
+    },
+    {
       code: '@media (prefers-color-scheme: dark) and (color-gamut: srgb) { a { color: lch(48% 82 283); } }',
       description: 'lch out of srgb gamut and wrapped in a long and wrong media query',
       message: messages.rejected('lch(48% 82 283)'),
