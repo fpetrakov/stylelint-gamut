@@ -13,10 +13,10 @@ testRule({
     },
     {
       code: '@media (prefers-color-scheme: dark) and (color-gamut: p3) { a { color: lch(48% 82 283); } }',
-      description: 'lch out of srgb gamut but wrapped in media query'
+      description: 'lch out of srgb gamut but wrapped in a long media query'
     },
     {
-      code: '@media (color-gamut: p3) { a { color: oklch(48% 82 283 / 73%); } }',
+      code: '@media (color-gamut: p3) { a { color: oklch(85% 0.1 354 / 73%); } }',
       description:
         'oklch with alpha out of srgb gamut but wrapped in media query'
     },
@@ -53,6 +53,15 @@ testRule({
       endColumn: 27
     },
     {
+      code: '@media (prefers-color-scheme: dark) and (color-gamut: srgb) { a { color: lch(48% 82 283); } }',
+      description: 'lch out of srgb gamut and wrapped in a long and wrong media query',
+      message: messages.rejected('lch(48% 82 283)'),
+      line: 1,
+      column: 74,
+      endLine: 1,
+      endColumn: 89
+    },
+    {
       code: 'a { color: lch(48% 82 283 / 72%); }',
       description: 'lch with alpha',
       message: messages.rejected('lch(48% 82 283 / 72%)'),
@@ -62,13 +71,13 @@ testRule({
       endColumn: 33
     },
     {
-      code: 'a { color: oklch(98% 49 129); }',
+      code: 'a { color: oklch(85% 0.1 354 / 73%); }',
       description: 'oklch',
-      message: messages.rejected('oklch(98% 49 129)'),
+      message: messages.rejected('oklch(85% 0.1 354 / 73%)'),
       line: 1,
       column: 12,
       endLine: 1,
-      endColumn: 29
+      endColumn: 36
     },
 
     {
