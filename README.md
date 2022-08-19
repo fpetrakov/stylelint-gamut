@@ -4,7 +4,7 @@
 
 **stylelint-gamut** is a [Stylelint] plugin that helps you to work with different color spaces. 
 
-Right now it's working with **node version ≥ 16.0.0**.
+Right now it's working with **node version ≥ 16.0.0** and **Stylelint version ≥ 14.0.0**.
 
 # Installation
 
