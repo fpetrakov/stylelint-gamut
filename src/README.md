@@ -21,6 +21,25 @@ This rule checks if the color is in sRGB space. If it's not, you should wrap it 
 }
 ```
 
+In case of **css custom properties** you should wrap either the custom property declaration:
+
+```css
+@media (color-gamut: p3) {
+  :root {
+    --my-var: lch(48% 82 283);
+  }
+}
+```
+or the rule that uses the custom property:
+
+```css
+@media (color-gamut: p3) {
+  a {
+    color: var(--my-var);
+  }
+}
+```
+
 Please note that conditional imports are not checked, e.g.:
 
 ```html
