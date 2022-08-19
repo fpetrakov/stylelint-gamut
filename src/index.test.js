@@ -13,6 +13,18 @@ testRule({
       description: 'lch out of srgb gamut but wrapped in media query'
     },
     {
+      code: ':root { --my-var: lch(50% 0 0); }; a { color: var(--my-var); };',
+      description: 'using variable in srgb gamut'
+    },
+    {
+      code: ':root { --my-var: 20; }; a { padding: var(--my-var); };',
+      description: 'ignore not color variables'
+    },
+    {
+      code: ':root { --my-var: lch(48% 82 283); }; @media (color-gamut:p3) { a { color: var(--my-var); } }',
+      description: 'using variable out of srgb gamut but wrapped in media query'
+    },
+    {
       code: '@media (prefers-color-scheme: dark) and (color-gamut: p3) { a { color: lch(48% 82 283); } }',
       description: 'lch out of srgb gamut but wrapped in a long media query'
     },
@@ -38,10 +50,6 @@ testRule({
       description: 'ignore not lch color declaration'
     },
     {
-      code: ':root { --clr: lch(48% 82 283 / 75%) } a { color: var(--clr) }',
-      description: 'ignore css variables'
-    },
-    {
       code: '@myVariable: lch(48% 82 283); a { color: @myVariable; }',
       description: 'ignore Less variable'
     },
@@ -52,6 +60,15 @@ testRule({
   ],
 
   reject: [
+    {
+      code: ':root { --my-var: lch(48% 82 283); }; a {background-image: linear-gradient(red var(--my-var));}',
+      description: 'using variable out of srgb gamut in multicolor property',
+      message: messages.rejected('var(--my-var)'),
+      line: 1,
+      column: 60,
+      endLine: 1,
+      endColumn: 94
+    },
     {
       code: 'a { color: lch(48% 82 283); }',
       description: 'lch',

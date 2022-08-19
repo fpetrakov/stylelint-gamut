@@ -1,10 +1,8 @@
 'use strict'
 
-const valueParser = require('postcss-value-parser')
 const stylelint = require('stylelint')
 const Color = require('colorjs.io').default
 const isStandardSyntaxProperty = require('./utils/isStandardSyntaxProperty')
-const isCustomProperty = require('./utils/isCustomProperty')
 const isAtRule = require('./utils/isAtRule')
 const declarationValueIndex = require('./utils/declarationValueIndex')
 
@@ -29,45 +27,47 @@ const ruleFunction = (primary) => {
       return
     }
 
+    const customProperties = {}
+
     root.walkDecls((decl) => {
       if (!isStandardSyntaxProperty(decl.prop)) return
 
-      if (isCustomProperty(decl.prop)) return
-
-      if (decl.value.includes('lch(') || decl.value.includes('lab(')) {
-        const colors = decl.value.match(/(oklch|oklab|lab|lch)\([^)]+\)/g)
-        if (colors) {
-          for (const color of colors) {
-            checkColor(color)
-          }
+      const values = decl.value.match(/(oklch|oklab|lab|lch|var)\([^)]+\)/g)
+      if (values) {
+        for (const value of values) {
+          check(value)
         }
       }
 
-      function checkColor (color) {
-        const parsedValue = valueParser(color)
+      function check (value) {
+        let customPropValue
+        if (value.startsWith('var(--')) {
+          const varName = value.slice(4, -1)
+          customPropValue = customProperties[varName]
+          if (!customPropValue) return
+        }
 
-        parsedValue.walk((node, _index, nodes) => {
-          if (node.type !== 'function') return
+        const isInSrgbGamut = new Color(customPropValue || value).inGamut('srgb')
 
-          const isInSrgbGamut = new Color(valueParser.stringify(nodes)).inGamut(
-            'srgb'
-          )
+        if (isInSrgbGamut) return
 
-          if (isInSrgbGamut) return
+        if (decl.prop && decl.prop.startsWith('--')) {
+          customProperties[decl.prop] = decl.value.trim()
+          return
+        }
 
-          if (isInColorGamutP3MediaQuery(decl)) return
+        if (isInColorGamutP3MediaQuery(decl)) return
 
-          const index = declarationValueIndex(decl) + node.sourceIndex
-          const endIndex = index + decl.value.length
+        const index = declarationValueIndex(decl)
+        const endIndex = index + decl.value.length
 
-          stylelint.utils.report({
-            message: messages.rejected(color),
-            node: decl,
-            index,
-            endIndex,
-            result,
-            ruleName
-          })
+        stylelint.utils.report({
+          message: messages.rejected(value),
+          node: decl,
+          index,
+          endIndex,
+          result,
+          ruleName
         })
       }
     })
