@@ -32,8 +32,6 @@ const ruleFunction = (primary) => {
     root.walkDecls((decl) => {
       if (!isStandardSyntaxProperty(decl.prop)) return
 
-      if (isCustomProperty(decl.prop)) return
-
       if (decl.value.includes('lch(') || decl.value.includes('lab(')) {
         const colors = decl.value.match(/(oklch|oklab|lab|lch)\([^)]+\)/g)
         if (colors) {
