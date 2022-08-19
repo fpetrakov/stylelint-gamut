@@ -43,20 +43,24 @@ const ruleFunction = (primary) => {
         let customPropValue
         if (value.startsWith('var(--')) {
           const varName = value.slice(4, -1)
-          customPropValue = customProperties[varName]
-          if (!customPropValue) return
+
+          if (customProperties[varName] && !customProperties[varName].inQuery) {
+            customPropValue = customProperties[varName].value
+          } else {
+            return
+          }
         }
 
         const isInSrgbGamut = new Color(customPropValue || value).inGamut('srgb')
 
         if (isInSrgbGamut) return
 
+        if (isInColorGamutP3MediaQuery(decl)) return
+
         if (decl.prop && decl.prop.startsWith('--')) {
-          customProperties[decl.prop] = decl.value.trim()
+          customProperties[decl.prop] = { value: decl.value.trim(), inQuery: false }
           return
         }
-
-        if (isInColorGamutP3MediaQuery(decl)) return
 
         const index = declarationValueIndex(decl)
         const endIndex = index + decl.value.length
