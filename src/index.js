@@ -5,7 +5,6 @@ const stylelint = require('stylelint')
 const Color = require('colorjs.io').default
 const isStandardSyntaxProperty = require('./utils/isStandardSyntaxProperty')
 const isCustomProperty = require('./utils/isCustomProperty')
-const getDeclarationValue = require('./utils/getDeclarationValue')
 const isAtRule = require('./utils/isAtRule')
 const declarationValueIndex = require('./utils/declarationValueIndex')
 
@@ -18,8 +17,6 @@ const messages = stylelint.utils.ruleMessages(ruleName, {
 const meta = {
   url: 'https://stylelint.io/user-guide/rules/list/color-no-out-gamut-range'
 }
-
-const COLOR_FUNCTIONS = new Set(['lch', 'lab', 'oklch', 'oklab'])
 
 /** @type {import('stylelint').Rule} */
 const ruleFunction = (primary) => {
@@ -37,35 +34,42 @@ const ruleFunction = (primary) => {
 
       if (isCustomProperty(decl.prop)) return
 
-      const parsedValue = valueParser(getDeclarationValue(decl))
-
-      parsedValue.walk((node, _index, nodes) => {
-        if (node.type !== 'function') return
-
-        if (!COLOR_FUNCTIONS.has(node.value)) {
-          return
+      if (decl.value.includes('lch(') || decl.value.includes('lab(')) {
+        const colors = decl.value.match(/(oklch|oklab|lab|lch)\([^\)]+\)/g)
+        if (colors) {
+          for (const color of colors) {
+            checkColor(color)
+          }
         }
+      }
 
-        const isInSrgbGamut = new Color(valueParser.stringify(nodes)).inGamut(
-          'srgb'
-        )
+      function checkColor (color) {
+        const parsedValue = valueParser(color)
 
-        if (isInSrgbGamut) return
+        parsedValue.walk((node, _index, nodes) => {
+          if (node.type !== 'function') return
 
-        if (isInColorGamutP3MediaQuery(decl)) return
+          const isInSrgbGamut = new Color(valueParser.stringify(nodes)).inGamut(
+            'srgb'
+          )
 
-        const index = declarationValueIndex(decl) + node.sourceIndex
-        const endIndex = index + decl.value.length
+          if (isInSrgbGamut) return
 
-        stylelint.utils.report({
-          message: messages.rejected(decl.value),
-          node: decl,
-          index,
-          endIndex,
-          result,
-          ruleName
+          if (isInColorGamutP3MediaQuery(decl)) return
+
+          const index = declarationValueIndex(decl) + node.sourceIndex
+          const endIndex = index + decl.value.length
+
+          stylelint.utils.report({
+            message: messages.rejected(color),
+            node: decl,
+            index,
+            endIndex,
+            result,
+            ruleName
+          })
         })
-      })
+      }
     })
   }
 }

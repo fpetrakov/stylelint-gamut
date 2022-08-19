@@ -25,6 +25,14 @@ testRule({
       description: 'in srgb gamut'
     },
     {
+      code: '.foo { border: 4px solid oklch(100% 0 0); }',
+      description: 'in srgb gamut long property'
+    },
+    {
+      code: '.foo {background-image: linear-gradient(red lch(50% 0 0 )); }',
+      description: 'multicolor property in gamut range'
+    },
+    {
       code: 'a { color: red; }',
       description: 'ignore not lch color declaration'
     },
@@ -62,6 +70,15 @@ testRule({
       endColumn: 89
     },
     {
+      code: '.foo { background: content-box oklch(82.6% 0.087 262.26); }',
+      description: 'out of srgb gamut long property',
+      message: messages.rejected('oklch(82.6% 0.087 262.26)'),
+      line: 1,
+      column: 20,
+      endLine: 1,
+      endColumn: 57
+    },
+    {
       code: 'a { color: lch(48% 82 283 / 72%); }',
       description: 'lch with alpha',
       message: messages.rejected('lch(48% 82 283 / 72%)'),
@@ -69,6 +86,15 @@ testRule({
       column: 12,
       endLine: 1,
       endColumn: 33
+    },
+    {
+      code: '.foo {background-image: linear-gradient(red lch(48% 82 283)); }',
+      description: 'multicolor property out of gamut range',
+      message: messages.rejected('lch(48% 82 283)'),
+      line: 1,
+      column: 25,
+      endLine: 1,
+      endColumn: 61
     },
     {
       code: 'a { color: oklch(85% 0.1 354 / 73%); }',
