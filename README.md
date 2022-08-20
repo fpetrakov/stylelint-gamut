@@ -18,7 +18,7 @@
 1. If you haven't, install [Stylelint]:
 
 ```
-npm install stylelint --save-dev
+npm install stylelint stylelint-config-standard --save-dev
 ```
 
 2.  Install `stylelint-gamut`:
