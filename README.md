@@ -8,7 +8,7 @@
 
 * [`color-no-out-gamut-range`](./src/README.md): Throw warning if color goes out of sRGB color space and is not wrapped in `@media (color-gamut: p3) {}`.
 
-# Compatability
+# Compatibility
 
 Right now it's working with **node version ≥ 16.0.0** and **Stylelint version ≥ 14.0.0**.
 
