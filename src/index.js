@@ -2,9 +2,7 @@
 
 const stylelint = require('stylelint')
 const Color = require('colorjs.io').default
-const isStandardSyntaxProperty = require('./utils/isStandardSyntaxProperty')
-const isAtRule = require('./utils/isAtRule')
-const declarationValueIndex = require('./utils/declarationValueIndex')
+const { isInColorGamutP3MediaQuery, isStandardSyntaxProperty, declarationValueIndex } = require('./utils')
 
 const ruleName = 'gamut/color-no-out-gamut-range'
 
@@ -76,20 +74,6 @@ const ruleFunction = (primary) => {
       }
     })
   }
-}
-
-/**
- * @param {import('postcss').Declaration} decl
- * @returns {boolean}
- */
-function isInColorGamutP3MediaQuery (decl) {
-  if (decl.parent && decl.parent.parent && isAtRule(decl.parent.parent)) {
-    const parent = decl.parent.parent
-
-    return parent.name === 'media' && /\(color-gamut:\s*p3\)/.test(parent.params)
-  }
-
-  return false
 }
 
 ruleFunction.ruleName = ruleName
