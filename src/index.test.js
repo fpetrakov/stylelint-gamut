@@ -13,6 +13,18 @@ testRule({
       description: 'lch out of srgb gamut but wrapped in media query'
     },
     {
+      code: ':root { --my-var: oklab(85.69% 0.1007 0.1191 / .5); }; @media (color-gamut:rec2020) { a { color: var(--my-var); } }',
+      description: 'oklab var out of p3 gamut but wrapped in rec2020 media query'
+    },
+    {
+      code: '@media (color-gamut:rec2020) { a { color: oklab(85.69% 0.1007 0.1191 / .5); } }',
+      description: 'oklab out of p3 gamut but wrapped in rec2020 media query'
+    },
+    {
+      code: '@media (color-gamut:rec2020) { a { color: lab(82.2345% 40.1645 59.9971 / .5); } }',
+      description: 'lab out of p3 gamut but wrapped in rec2020 media query'
+    },
+    {
       code: ':root { --my-var: lch(50% 0 0); }; a { color: var(--my-var); };',
       description: 'using variable in srgb gamut'
     },
@@ -72,6 +84,33 @@ testRule({
       column: 50,
       endLine: 1,
       endColumn: 63
+    },
+    {
+      code: ':root { --my-var: oklab(85.69% 0.1007 0.1191 / .5); }; @media (color-gamut:p3) { a { color: var(--my-var); } }',
+      description: 'oklab var out of p3 gamut and wrapped in p3 media query',
+      message: messages.rejected('var(--my-var)'),
+      line: 1,
+      column: 93,
+      endLine: 1,
+      endColumn: 106
+    },
+    {
+      code: '@media (color-gamut:srgb) { a { color: oklab(85.69% 0.1007 0.1191 / .5); } }',
+      description: 'oklab out of p3 gamut and wrapped in srgb media query',
+      message: messages.rejected('oklab(85.69% 0.1007 0.1191 / .5)'),
+      line: 1,
+      column: 40,
+      endLine: 1,
+      endColumn: 72
+    },
+    {
+      code: '@media (color-gamut:p3) { a { color: lab(82.2345% 40.1645 59.9971 / .5); } }',
+      description: 'lab out of p3 gamut and wrapped in p3 media query',
+      message: messages.rejected('lab(82.2345% 40.1645 59.9971 / .5)'),
+      line: 1,
+      column: 38,
+      endLine: 1,
+      endColumn: 72
     },
     {
       code: ':root { --my-var: lch(48% 82 283); }; a {background-image: linear-gradient(red var(--my-var));}',

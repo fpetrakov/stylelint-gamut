@@ -2,7 +2,7 @@
 
 const stylelint = require('stylelint')
 const Color = require('colorjs.io').default
-const { isInColorGamutP3MediaQuery, isStandardSyntaxProperty, declarationValueIndex } = require('./utils')
+const { isInColorGamutP3MediaQuery, isStandardSyntaxProperty, declarationValueIndex, isInColorGamutRec2020MediaQuery } = require('./utils')
 
 const ruleName = 'gamut/color-no-out-gamut-range'
 
@@ -49,11 +49,13 @@ const ruleFunction = (primary) => {
           }
         }
 
-        const isInSrgbGamut = new Color(customPropValue || value).inGamut('srgb')
+        const color = new Color(customPropValue || value)
 
-        if (isInSrgbGamut) return
+        if (color.inGamut('srgb')) return
 
-        if (isInColorGamutP3MediaQuery(decl)) return
+        if (color.inGamut('p3') && isInColorGamutP3MediaQuery(decl)) return
+
+        if (color.inGamut('rec2020') && isInColorGamutRec2020MediaQuery(decl)) return
 
         if (decl.prop && decl.prop.startsWith('--')) {
           customProperties[decl.prop] = { value: decl.value.trim(), inQuery: false }
