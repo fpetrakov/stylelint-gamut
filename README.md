@@ -2,7 +2,7 @@
 
 [![npm version][npm-version-img]][npm] [![npm downloads last month][npm-downloads-img]][npm]
 
-**stylelint-gamut** is a [Stylelint] that plugin that helps you to work with different color spaces.
+**stylelint-gamut** is a [Stylelint] plugin that helps you to work with different color spaces.
 
 # Rules
 
