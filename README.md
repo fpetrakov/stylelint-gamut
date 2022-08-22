@@ -6,7 +6,7 @@
 
 # Rules
 
-* [`color-no-out-gamut-range`](./src/README.md): Throw warning if color goes out of sRGB color space and is not wrapped in `@media (color-gamut: p3) {}`.
+* [`color-no-out-gamut-range`](./src/README.md): Throw warning if color goes out of sRGB color space and is not wrapped in `@media (color-gamut: p3) {}` or `@media (color-gamut: rec2020) {}`.
 
 # Requirements 
 
