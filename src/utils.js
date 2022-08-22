@@ -66,10 +66,38 @@ function isStandardSyntaxProperty (property) {
  * @returns {boolean}
  */
 function isInColorGamutP3MediaQuery (decl) {
+  const parentMediaQuery = getMediaQueryParent(decl)
+
+  if (parentMediaQuery && /\(color-gamut:\s*p3\)/.test(parentMediaQuery.params)) {
+    return true
+  }
+
+  return false
+}
+
+/**
+ * @param {import('postcss').Declaration} decl
+ * @returns {boolean}
+ */
+function isInColorGamutRec2020MediaQuery (decl) {
+  const parentMediaQuery = getMediaQueryParent(decl)
+
+  if (parentMediaQuery && /\(color-gamut:\s*rec2020\)/.test(parentMediaQuery.params)) {
+    return true
+  }
+
+  return false
+}
+
+/**
+ * @param {import('postcss').Declaration} decl
+ * @returns {boolean | decl}
+ */
+function getMediaQueryParent (decl) {
   if (decl.parent && decl.parent.parent && isAtRule(decl.parent.parent)) {
     const parent = decl.parent.parent
 
-    return parent.name === 'media' && /\(color-gamut:\s*p3\)/.test(parent.params)
+    return parent.name === 'media' && parent
   }
 
   return false
@@ -78,5 +106,6 @@ function isInColorGamutP3MediaQuery (decl) {
 module.exports = {
   isStandardSyntaxProperty,
   declarationValueIndex,
-  isInColorGamutP3MediaQuery
+  isInColorGamutP3MediaQuery,
+  isInColorGamutRec2020MediaQuery
 }
