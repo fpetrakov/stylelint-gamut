@@ -1,4 +1,4 @@
-# stylelint-gamut
+# <img src="./logo/logo.png" width="100" height="100">
 
 [![npm version][npm-version-img]][npm] [![npm downloads last month][npm-downloads-img]][npm]
 
