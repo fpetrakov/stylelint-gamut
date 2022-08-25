@@ -11,7 +11,7 @@ const messages = stylelint.utils.ruleMessages(ruleName, {
 })
 
 const meta = {
-  url: 'https://stylelint.io/user-guide/rules/list/color-no-out-gamut-range'
+  url: 'https://github.com/fpetrakov/stylelint-gamut/blob/master/src/README.md'
 }
 
 /** @type {import('stylelint').Rule} */
