@@ -29,14 +29,6 @@ function declarationValueIndex (decl) {
 }
 
 /**
- * @param {Node} node
- * @returns {node is import('postcss').AtRule}
- */
-function isAtRule (node) {
-  return node.type === 'atrule'
-}
-
-/**
  * Check whether a property is standard
  *
  * @param {string} property
@@ -94,13 +86,21 @@ function isInColorGamutRec2020MediaQuery (decl) {
  * @returns {boolean | decl}
  */
 function getMediaQueryParent (decl) {
-  if (decl.parent && decl.parent.parent && isAtRule(decl.parent.parent)) {
-    const parent = decl.parent.parent
+  let parent = decl.parent
 
-    return parent.name === 'media' && parent
-  }
+  if (parent && isMediaQuery(parent)) return parent
 
-  return false
+  parent = parent.parent
+
+  return isMediaQuery(parent) && parent
+}
+
+/**
+ * @param {import('postcss').Declaration} decl
+ * @returns {boolean}
+ */
+function isMediaQuery (decl) {
+  return decl.type === 'atrule' && decl.name === 'media'
 }
 
 module.exports = {

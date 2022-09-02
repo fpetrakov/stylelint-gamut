@@ -72,6 +72,10 @@ testRule({
     {
       code: ':root { $clr: lch(48% 82 283 / 67%) } a { color: $clr; }',
       description: 'ignore scss variables'
+    },
+    {
+      code: 'html {--hover: oklch(58% 0.22 260 / 20%); @media (color-gamut: p3) {--hover: oklch(54% 0.27 260 / 0.2); } } ::selection { background: var(--hover); }',
+      description: 'nested'
     }
   ],
 
