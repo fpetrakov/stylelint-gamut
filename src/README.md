@@ -52,7 +52,7 @@ or the rule that uses the custom property:
 }
 ```
 
-Custom properties inside color declaration will be ignored:
+Custom properties inside color declaration are ignored:
 
 ```css
 background-color: oklch(var(--oklch-primary) / var(--alpha-bg)); /* not checked */
