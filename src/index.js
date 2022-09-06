@@ -11,7 +11,7 @@ const messages = stylelint.utils.ruleMessages(ruleName, {
 })
 
 const meta = {
-  url: 'https://github.com/fpetrakov/stylelint-gamut/blob/master/src/README.md'
+  url: 'https://github.com/ab34b266/stylelint-gamut/blob/master/src/README.md'
 }
 
 /** @type {import('stylelint').Rule} */
