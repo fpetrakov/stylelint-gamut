@@ -52,6 +52,12 @@ or the rule that uses the custom property:
 }
 ```
 
+Custom properties inside color declaration will be ignored:
+
+```css
+background-color: oklch(var(--oklch-primary) / var(--alpha-bg)); /* not checked */
+```
+
 Please note that conditional imports are not checked, e.g.:
 
 ```html
