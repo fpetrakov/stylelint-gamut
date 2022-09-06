@@ -38,6 +38,8 @@ const ruleFunction = (primary) => {
       }
 
       function check (value) {
+        if (!value.startsWith('var(--') && value.includes('var(--')) return
+
         let customPropValue
         if (value.startsWith('var(--')) {
           const varName = value.slice(4, -1)
