@@ -10,7 +10,7 @@
 
 # Requirements 
 
-- **node version ≥ 16.0.0**
+- **node version ≥ 12.0.0**
 - **Stylelint version ≥ 14.0.0**.
 
 # Installation
