@@ -80,6 +80,10 @@ testRule({
     {
       code: 'html {--hover: oklch(58% 0.22 260 / 20%); @media (color-gamut: p3) {--hover: oklch(54% 0.27 260 / 0.2); } } ::selection { background: var(--hover); }',
       description: 'nested'
+    },
+    {
+      code: 'a { background: var(-) }',
+      description: 'should be not fired rule'
     }
   ],
 
