@@ -17,6 +17,10 @@ testRule({
       description: 'ignore using vars inside'
     },
     {
+      code: '.root { @supports (color: oklch(0% 0 0)) { background-color: oklch(token(--custom-token)); } }',
+      description: 'ignore incorrect values'
+    },
+    {
       code: ':root { --my-var: oklab(85.69% 0.1007 0.1191 / .5); }; @media (color-gamut:rec2020) { a { color: var(--my-var); } }',
       description: 'oklab var out of p3 gamut but wrapped in rec2020 media query'
     },

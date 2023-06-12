@@ -14,6 +14,10 @@ const meta = {
   url: 'https://github.com/fpetrakov/stylelint-gamut/blob/master/src/README.md'
 }
 
+const startsWithNumber = (str) => {
+  return /^\d/.test(str)
+}
+
 /** @type {import('stylelint').Rule} */
 const ruleFunction = (primary) => {
   return (root, result) => {
@@ -39,6 +43,8 @@ const ruleFunction = (primary) => {
 
       function check (value) {
         if (!value.startsWith('var(--') && value.includes('var(--')) return
+
+        if (!value.startsWith('var(--') && !startsWithNumber(value.split('(')[1])) return
 
         let customPropValue
         if (value.startsWith('var(--')) {
