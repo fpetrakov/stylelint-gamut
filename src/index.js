@@ -2,7 +2,13 @@
 
 const stylelint = require('stylelint')
 const Color = require('colorjs.io').default
-const { isInColorGamutP3MediaQuery, isStandardSyntaxProperty, declarationValueIndex, isInColorGamutRec2020MediaQuery } = require('./utils')
+const {
+  isInColorGamutP3MediaQuery,
+  isStandardSyntaxProperty,
+  declarationValueIndex,
+  isInColorGamutRec2020MediaQuery,
+  startsWithNumber
+} = require('./utils')
 
 const ruleName = 'gamut/color-no-out-gamut-range'
 
@@ -37,13 +43,20 @@ const ruleFunction = (primary) => {
         }
       }
 
+      // value is e.g. lch(48% 82 283 / 67%)
       function check (value) {
-        if (!value.startsWith('var(--') && value.includes('var(--')) return
+        const shouldBeIgnored =
+          !value.startsWith('var(--') &&
+          (
+            value.includes('var(--') ||
+            !startsWithNumber(value.split('(')[1])
+          )
+
+        if (shouldBeIgnored) return
 
         let customPropValue
         if (value.startsWith('var(--')) {
           const varName = value.slice(4, -1)
-
           if (customProperties[varName] && !customProperties[varName].inQuery) {
             customPropValue = customProperties[varName].value
           } else {
@@ -54,9 +67,7 @@ const ruleFunction = (primary) => {
         const color = new Color(customPropValue || value)
 
         if (color.inGamut('srgb')) return
-
         if (color.inGamut('p3') && isInColorGamutP3MediaQuery(decl)) return
-
         if (color.inGamut('rec2020') && isInColorGamutRec2020MediaQuery(decl)) return
 
         if (decl.prop && decl.prop.startsWith('--')) {
@@ -66,7 +77,6 @@ const ruleFunction = (primary) => {
 
         const index = declarationValueIndex(decl)
         const endIndex = index + decl.value.length
-
         stylelint.utils.report({
           message: messages.rejected(value),
           node: decl,

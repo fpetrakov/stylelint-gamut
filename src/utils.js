@@ -10,14 +10,10 @@ function declarationValueIndex (decl) {
   const raws = decl.raws
 
   return [
-    // @ts-expect-error -- TS2571: Object is of type 'unknown'.
     raws.prop && raws.prop.prefix,
-    // @ts-expect-error -- TS2571: Object is of type 'unknown'.
     (raws.prop && raws.prop.raw) || decl.prop,
-    // @ts-expect-error -- TS2571: Object is of type 'unknown'.
     raws.prop && raws.prop.suffix,
     raws.between || ':',
-    // @ts-expect-error -- TS2339: Property 'prefix' does not exist on type '{ value: string; raw: string; }'.
     raws.value && raws.value.prefix
   ].reduce((count, str) => {
     if (str) {
@@ -103,9 +99,14 @@ function isMediaQuery (decl) {
   return decl.type === 'atrule' && decl.name === 'media'
 }
 
+function startsWithNumber (str) {
+  return /^\d/.test(str)
+}
+
 module.exports = {
   isStandardSyntaxProperty,
   declarationValueIndex,
   isInColorGamutP3MediaQuery,
-  isInColorGamutRec2020MediaQuery
+  isInColorGamutRec2020MediaQuery,
+  startsWithNumber
 }
