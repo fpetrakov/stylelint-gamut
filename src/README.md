@@ -15,9 +15,9 @@ This rule checks if the color is in sRGB, p3 or rec2020 space. If it's not in sR
 
 ```css
 @media (color-gamut: p3) {
-  a {
-    color: lch(29.8% 42.5 109.485);
-  }
+	a {
+		color: lch(29.8% 42.5 109.485);
+	}
 }
 /**        ↑
  * This color is in p3 gamut range */
@@ -25,9 +25,9 @@ This rule checks if the color is in sRGB, p3 or rec2020 space. If it's not in sR
 
 ```css
 @media (color-gamut: rec2020) {
-  a {
-    color: lch(25.1% 42.5 109.485);
-  }
+	a {
+		color: lch(25.1% 42.5 109.485);
+	}
 }
 /**        ↑
  * This color is in rec2020 gamut range */
@@ -37,25 +37,28 @@ In case of **css custom properties** you should wrap either the custom property 
 
 ```css
 @media (color-gamut: p3) {
-  :root {
-    --my-var: lch(48% 82 283);
-  }
+	:root {
+		--my-var: lch(48% 82 283);
+	}
 }
 ```
+
 or the rule that uses the custom property:
 
 ```css
 @media (color-gamut: p3) {
-  a {
-    color: var(--my-var);
-  }
+	a {
+		color: var(--my-var);
+	}
 }
 ```
 
 Custom properties inside color declaration are ignored:
 
 ```css
-background-color: oklch(var(--oklch-primary) / var(--alpha-bg)); /* not checked */
+background-color: oklch(
+	var(--oklch-primary) / var(--alpha-bg)
+); /* not checked */
 ```
 
 Please note that conditional imports are not checked, e.g.:
