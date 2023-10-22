@@ -1,4 +1,5 @@
-node_modules
-.github
+*.yml
+*.yaml
 .husky
-*.md
+.github
+node_modules
