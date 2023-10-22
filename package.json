@@ -4,14 +4,14 @@
 	"description": "Stylelint plugin for working with different color spaces",
 	"main": "src/index.js",
 	"scripts": {
-		"format": "prettier --write",
-		"lint": "eslint --fix",
+		"format": "prettier --write .",
+		"lint": "eslint --fix *.js",
 		"test": "jest",
 		"prepare": "husky install"
 	},
 	"lint-staged": {
-		"*.js": "npm run lint",
-		".": "npm run format"
+		"*.js": "eslint --fix",
+		".": "prettier -write"
 	},
 	"engines": {
 		"node": ">=16.0.0"
