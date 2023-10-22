@@ -13,7 +13,7 @@ const {
 const ruleName = "gamut/color-no-out-gamut-range";
 
 const messages = stylelint.utils.ruleMessages(ruleName, {
-	rejected: color => `Unexpected color out of gamut range "${color}"`,
+	rejected: (color) => `Unexpected color out of gamut range "${color}"`,
 });
 
 const meta = {
@@ -21,7 +21,7 @@ const meta = {
 };
 
 /** @type {import('stylelint').Rule} */
-const ruleFunction = primary => {
+const ruleFunction = (primary) => {
 	return (root, result) => {
 		const validOptions = stylelint.utils.validateOptions(result, ruleName, {
 			actual: primary,
@@ -33,7 +33,7 @@ const ruleFunction = primary => {
 
 		const customProperties = {};
 
-		root.walkDecls(decl => {
+		root.walkDecls((decl) => {
 			if (!isStandardSyntaxProperty(decl.prop)) return;
 
 			const values = decl.value.match(

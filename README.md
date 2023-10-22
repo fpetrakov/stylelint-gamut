@@ -6,12 +6,12 @@
 
 # Rules
 
--   [`color-no-out-gamut-range`](./src/README.md): Throw warning if color goes out of sRGB color space and is not wrapped in `@media (color-gamut: p3) {}` or `@media (color-gamut: rec2020) {}`.
+- [`color-no-out-gamut-range`](./src/README.md): Throw warning if color goes out of sRGB color space and is not wrapped in `@media (color-gamut: p3) {}` or `@media (color-gamut: rec2020) {}`.
 
 # Requirements
 
--   **node version ≥ 12.0.0**
--   **Stylelint version ≥ 14.0.0**.
+- **node version ≥ 12.0.0**
+- **Stylelint version ≥ 14.0.0**.
 
 # Installation
 
@@ -46,9 +46,9 @@ It is already used by the creator of [PostCSS] [Andrey Sitnik].
 
 Read more about color spaces in css:
 
--   [OKLCH in CSS: why we moved from RGB and HSL](https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl)
--   [LCH colors in CSS: what, why, and how?](https://lea.verou.me/2020/04/lch-colors-in-css-what-why-and-how/)
--   [A Guide To Modern CSS Colors](https://www.smashingmagazine.com/2021/11/guide-modern-css-colors/)
+- [OKLCH in CSS: why we moved from RGB and HSL](https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl)
+- [LCH colors in CSS: what, why, and how?](https://lea.verou.me/2020/04/lch-colors-in-css-what-why-and-how/)
+- [A Guide To Modern CSS Colors](https://www.smashingmagazine.com/2021/11/guide-modern-css-colors/)
 
 [Stylelint]: https://stylelint.io/
 [npm-version-img]: https://img.shields.io/npm/v/stylelint-gamut.svg
