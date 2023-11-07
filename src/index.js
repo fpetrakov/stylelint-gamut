@@ -2,6 +2,7 @@
 
 const stylelint = require("stylelint");
 const Color = require("colorjs.io").default;
+
 const {
 	isInColorGamutP3MediaQuery,
 	isStandardSyntaxProperty,
@@ -39,13 +40,14 @@ const ruleFunction = (primary) => {
 			const values = decl.value.match(
 				/(oklch|oklab|lab|lch|var)\([^)]+\)/g,
 			);
-			if (values) {
-				for (const value of values) {
-					check(value);
-				}
-			}
+
+			if (!values) return;
 
 			// value is e.g. lch(48% 82 283 / 67%)
+			for (const value of values) {
+				check(value);
+			}
+
 			function check(value) {
 				const shouldBeIgnored =
 					!value.startsWith("var(--") &&

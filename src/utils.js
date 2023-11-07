@@ -6,7 +6,7 @@
  * @param {import('postcss').Declaration} decl
  * @returns {number}
  */
-function declarationValueIndex(decl) {
+const declarationValueIndex = (decl) => {
 	const raws = decl.raws;
 
 	return [
@@ -22,7 +22,7 @@ function declarationValueIndex(decl) {
 
 		return count;
 	}, 0);
-}
+};
 
 /**
  * Check whether a property is standard
@@ -30,7 +30,7 @@ function declarationValueIndex(decl) {
  * @param {string} property
  * @return {boolean} If `true`, the property is standard
  */
-function isStandardSyntaxProperty(property) {
+const isStandardSyntaxProperty = (property) => {
 	// SCSS var (e.g. $var: x), list (e.g. $list: (x)) or map (e.g. $map: (key:value))
 	if (property.startsWith("$")) {
 		return false;
@@ -47,13 +47,13 @@ function isStandardSyntaxProperty(property) {
 	}
 
 	return true;
-}
+};
 
 /**
  * @param {import('postcss').Declaration} decl
  * @returns {boolean}
  */
-function isInColorGamutP3MediaQuery(decl) {
+const isInColorGamutP3MediaQuery = (decl) => {
 	const parentMediaQuery = getMediaQueryParent(decl);
 
 	if (
@@ -64,13 +64,13 @@ function isInColorGamutP3MediaQuery(decl) {
 	}
 
 	return false;
-}
+};
 
 /**
  * @param {import('postcss').Declaration} decl
  * @returns {boolean}
  */
-function isInColorGamutRec2020MediaQuery(decl) {
+const isInColorGamutRec2020MediaQuery = (decl) => {
 	const parentMediaQuery = getMediaQueryParent(decl);
 
 	if (
@@ -81,13 +81,13 @@ function isInColorGamutRec2020MediaQuery(decl) {
 	}
 
 	return false;
-}
+};
 
 /**
  * @param {import('postcss').Declaration} decl
  * @returns {boolean | decl}
  */
-function getMediaQueryParent(decl) {
+const getMediaQueryParent = (decl) => {
 	let parent = decl.parent;
 
 	if (parent && isMediaQuery(parent)) return parent;
@@ -95,19 +95,15 @@ function getMediaQueryParent(decl) {
 	parent = parent.parent;
 
 	return isMediaQuery(parent) && parent;
-}
+};
 
 /**
  * @param {import('postcss').Declaration} decl
  * @returns {boolean}
  */
-function isMediaQuery(decl) {
-	return decl.type === "atrule" && decl.name === "media";
-}
+const isMediaQuery = (decl) => decl.type === "atrule" && decl.name === "media";
 
-function startsWithNumber(str) {
-	return /^\d/.test(str);
-}
+const startsWithNumber = (str) => /^\d/.test(str);
 
 module.exports = {
 	isStandardSyntaxProperty,
