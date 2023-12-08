@@ -40,7 +40,7 @@
 	},
 	"homepage": "https://github.com/fpetrakov/stylelint-gamut#readme",
 	"peerDependencies": {
-		"stylelint": "^14.0.0 || ^15.0.0"
+		"stylelint": "^14.0.0 || ^15.0.0 || ^16.0.0"
 	},
 	"devDependencies": {
 		"eslint": "^8.43.0",
