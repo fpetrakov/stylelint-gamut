@@ -27,9 +27,7 @@ npm install stylelint stylelint-config-standard --save-dev
 npm install stylelint-gamut --save-dev
 ```
 
-# Usage
-
-Add `stylelint-gamut` to your Stylelint config `plugins` array, then add rules you need to the rules list. All rules from `stylelint-gamut` need to be namespaced with `gamut`.
+3. Add `stylelint-gamut` to your Stylelint config `plugins` array, then add rules you need to the rules list. All rules from `stylelint-gamut` need to be namespaced with `gamut`.
 
 ```json
 {
