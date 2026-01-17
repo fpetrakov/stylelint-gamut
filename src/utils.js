@@ -54,12 +54,7 @@ export const isStandardSyntaxProperty = (property) => {
 export const isInColorGamutP3MediaQuery = (decl) => {
 	const parentMediaQuery = getMediaQueryParent(decl);
 
-	if (
-		parentMediaQuery &&
-		/\(color-gamut:\s*p3\)/.test(parentMediaQuery.params)
-	) {
-		return true;
-	}
+	if (parentMediaQuery && /\(color-gamut:\s*p3\)/.test(parentMediaQuery.params)) return true;
 
 	return false;
 };
@@ -71,12 +66,7 @@ export const isInColorGamutP3MediaQuery = (decl) => {
 export const isInColorGamutRec2020MediaQuery = (decl) => {
 	const parentMediaQuery = getMediaQueryParent(decl);
 
-	if (
-		parentMediaQuery &&
-		/\(color-gamut:\s*rec2020\)/.test(parentMediaQuery.params)
-	) {
-		return true;
-	}
+	if (parentMediaQuery && /\(color-gamut:\s*rec2020\)/.test(parentMediaQuery.params)) return true;
 
 	return false;
 };

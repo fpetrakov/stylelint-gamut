@@ -40,9 +40,7 @@ const ruleFunction = (primary) => {
 		root.walkDecls((decl) => {
 			if (!isStandardSyntaxProperty(decl.prop)) return;
 
-			const values = decl.value.match(
-				/(oklch|oklab|lab|lch|var)\([^)]+\)/g,
-			);
+			const values = decl.value.match(/(oklch|oklab|lab|lch|var)\([^)]+\)/g);
 
 			if (!values) return;
 
@@ -54,18 +52,14 @@ const ruleFunction = (primary) => {
 			function check(value) {
 				const shouldBeIgnored =
 					!value.startsWith("var(--") &&
-					(value.includes("var(--") ||
-						!startsWithNumber(value.split("(")[1]));
+					(value.includes("var(--") || !startsWithNumber(value.split("(")[1]));
 
 				if (shouldBeIgnored) return;
 
 				let customPropValue;
 				if (value.startsWith("var(--")) {
 					const varName = value.slice(4, -1);
-					if (
-						customProperties[varName] &&
-						!customProperties[varName].inQuery
-					) {
+					if (customProperties[varName] && !customProperties[varName].inQuery) {
 						customPropValue = customProperties[varName].value;
 					} else {
 						return;
@@ -75,13 +69,8 @@ const ruleFunction = (primary) => {
 				const color = new Color(customPropValue || value);
 
 				if (color.inGamut("srgb")) return;
-				if (color.inGamut("p3") && isInColorGamutP3MediaQuery(decl))
-					return;
-				if (
-					color.inGamut("rec2020") &&
-					isInColorGamutRec2020MediaQuery(decl)
-				)
-					return;
+				if (color.inGamut("p3") && isInColorGamutP3MediaQuery(decl)) return;
+				if (color.inGamut("rec2020") && isInColorGamutRec2020MediaQuery(decl)) return;
 
 				if (decl.prop && decl.prop.startsWith("--")) {
 					customProperties[decl.prop] = {

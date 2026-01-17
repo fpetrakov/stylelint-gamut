@@ -21,23 +21,19 @@ testRule({
 		},
 		{
 			code: ".root { @supports (color: oklch(0% 0 0)) { background-color: oklch(token(--custom-token)); } }",
-			description:
-				"ignore using vars and anything that is not a number inside",
+			description: "ignore using vars and anything that is not a number inside",
 		},
 		{
 			code: ":root { --my-var: oklab(85.69% 0.1007 0.1191 / .5); }; @media (color-gamut:rec2020) { a { color: var(--my-var); } }",
-			description:
-				"oklab var out of p3 gamut but wrapped in rec2020 media query",
+			description: "oklab var out of p3 gamut but wrapped in rec2020 media query",
 		},
 		{
 			code: "@media (color-gamut:rec2020) { a { color: oklab(85.69% 0.1007 0.1191 / .5); } }",
-			description:
-				"oklab out of p3 gamut but wrapped in rec2020 media query",
+			description: "oklab out of p3 gamut but wrapped in rec2020 media query",
 		},
 		{
 			code: "@media (color-gamut:rec2020) { a { color: lab(82.2345% 40.1645 59.9971 / .5); } }",
-			description:
-				"lab out of p3 gamut but wrapped in rec2020 media query",
+			description: "lab out of p3 gamut but wrapped in rec2020 media query",
 		},
 		{
 			code: ":root { --my-var: lch(50% 0 0); }; a { color: var(--my-var); };",
@@ -49,23 +45,19 @@ testRule({
 		},
 		{
 			code: ":root { --my-var: lch(48% 82 283); }; @media (color-gamut:p3) { a { color: var(--my-var); } }",
-			description:
-				"using variable out of srgb gamut but wrapped in media query",
+			description: "using variable out of srgb gamut but wrapped in media query",
 		},
 		{
 			code: "@media (color-gamut:p3) { :root { --my-var: lch(48% 82 283); }; }; a { color: var(--my-var); };",
-			description:
-				"using variable out of srgb gamut but declaration wrapped in media query",
+			description: "using variable out of srgb gamut but declaration wrapped in media query",
 		},
 		{
 			code: "@media (prefers-color-scheme: dark) and (color-gamut: p3) { a { color: lch(48% 82 283); } }",
-			description:
-				"lch out of srgb gamut but wrapped in a long media query",
+			description: "lch out of srgb gamut but wrapped in a long media query",
 		},
 		{
 			code: "@media (color-gamut: p3) { a { color: oklch(85% 0.1 354 / 73%); } }",
-			description:
-				"oklch with alpha out of srgb gamut but wrapped in media query",
+			description: "oklch with alpha out of srgb gamut but wrapped in media query",
 		},
 		{
 			code: "a { color: lch(50% 0 0); }",
@@ -110,8 +102,7 @@ testRule({
 		},
 		{
 			code: ":root { --my-var: oklab(85.69% 0.1007 0.1191 / .5); }; @media (color-gamut:p3) { a { color: var(--my-var); } }",
-			description:
-				"oklab var out of p3 gamut and wrapped in p3 media query",
+			description: "oklab var out of p3 gamut and wrapped in p3 media query",
 			message: messages.rejected("var(--my-var)"),
 			line: 1,
 			column: 93,
@@ -120,8 +111,7 @@ testRule({
 		},
 		{
 			code: "@media (color-gamut:srgb) { a { color: oklab(85.69% 0.1007 0.1191 / .5); } }",
-			description:
-				"oklab out of p3 gamut and wrapped in srgb media query",
+			description: "oklab out of p3 gamut and wrapped in srgb media query",
 			message: messages.rejected("oklab(85.69% 0.1007 0.1191 / .5)"),
 			line: 1,
 			column: 40,
@@ -139,8 +129,7 @@ testRule({
 		},
 		{
 			code: ":root { --my-var: lch(48% 82 283); }; a {background-image: linear-gradient(red var(--my-var));}",
-			description:
-				"using variable out of srgb gamut in multicolor property",
+			description: "using variable out of srgb gamut in multicolor property",
 			message: messages.rejected("var(--my-var)"),
 			line: 1,
 			column: 60,
@@ -158,8 +147,7 @@ testRule({
 		},
 		{
 			code: "@media (prefers-color-scheme: dark) and (color-gamut: srgb) { a { color: lch(48% 82 283); } }",
-			description:
-				"lch out of srgb gamut and wrapped in a long and wrong media query",
+			description: "lch out of srgb gamut and wrapped in a long and wrong media query",
 			message: messages.rejected("lch(48% 82 283)"),
 			line: 1,
 			column: 74,

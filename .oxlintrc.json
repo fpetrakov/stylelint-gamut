@@ -1,0 +1,10 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"categories": {
+		"correctness": "error",
+		"nursery": "error"
+	},
+	"env": {
+		"builtin": true
+	}
+}

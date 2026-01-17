@@ -1,6 +1,0 @@
-*.yml
-*.yaml
-.githooks
-.github
-.prettierignore
-node_modules

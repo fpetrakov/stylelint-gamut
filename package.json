@@ -5,17 +5,17 @@
 	"type": "module",
 	"exports": "./src/index.js",
 	"scripts": {
-		"format": "prettier --write .",
-		"lint": "eslint --fix **/*.js",
+		"format": "oxfmt",
+		"lint": "oxlint --fix",
 		"test": "node --test",
 		"prepare": "git config --local core.hooksPath .githooks || true"
 	},
 	"lint-staged": {
 		"*.js": [
-			"eslint --fix",
-			"prettier --write"
+			"oxlint --fix",
+			"oxfmt"
 		],
-		"!(*.js)": "prettier --write"
+		"!(*.js)": "oxfmt"
 	},
 	"engines": {
 		"node": ">=20.19.0"
@@ -47,16 +47,9 @@
 		"stylelint": "^17.0.0"
 	},
 	"devDependencies": {
-		"@eslint/eslintrc": "^3.3.3",
-		"@eslint/js": "^9.39.2",
-		"eslint": "^9.39.2",
-		"eslint-config-prettier": "^10.1.8",
-		"eslint-config-standard": "^17.1.0",
-		"eslint-plugin-import": "^2.27.5",
-		"eslint-plugin-n": "^17.23.2",
-		"eslint-plugin-promise": "^7.2.1",
-		"globals": "^17.0.0",
 		"lint-staged": "^16.2.7",
+		"oxfmt": "^0.24.0",
+		"oxlint": "^1.39.0",
 		"prettier": "^3.0.3",
 		"stylelint": "^17.0.0",
 		"stylelint-test-rule-node": "^1.0.0"
