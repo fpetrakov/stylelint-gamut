@@ -1,19 +1,22 @@
-"use strict";
+import Color from "colorjs.io";
+import stylelint from "stylelint";
 
-const stylelint = require("stylelint");
-const Color = require("colorjs.io").default;
+import {
+	declarationValueIndex,
+	isInColorGamutP3MediaQuery,
+	isInColorGamutRec2020MediaQuery,
+	isStandardSyntaxProperty,
+	startsWithNumber,
+} from "./utils.js";
 
 const {
-	isInColorGamutP3MediaQuery,
-	isStandardSyntaxProperty,
-	declarationValueIndex,
-	isInColorGamutRec2020MediaQuery,
-	startsWithNumber,
-} = require("./utils");
+	createPlugin,
+	utils: { report, ruleMessages, validateOptions },
+} = stylelint;
 
 const ruleName = "gamut/color-no-out-gamut-range";
 
-const messages = stylelint.utils.ruleMessages(ruleName, {
+const messages = ruleMessages(ruleName, {
 	rejected: (color) => `Unexpected color out of gamut range "${color}"`,
 });
 
@@ -24,7 +27,7 @@ const meta = {
 /** @type {import('stylelint').Rule} */
 const ruleFunction = (primary) => {
 	return (root, result) => {
-		const validOptions = stylelint.utils.validateOptions(result, ruleName, {
+		const validOptions = validateOptions(result, ruleName, {
 			actual: primary,
 		});
 
@@ -90,7 +93,7 @@ const ruleFunction = (primary) => {
 
 				const index = declarationValueIndex(decl);
 				const endIndex = index + decl.value.length;
-				stylelint.utils.report({
+				report({
 					message: messages.rejected(value),
 					node: decl,
 					index,
@@ -107,4 +110,4 @@ ruleFunction.ruleName = ruleName;
 ruleFunction.messages = messages;
 ruleFunction.meta = meta;
 
-module.exports = stylelint.createPlugin(ruleName, ruleFunction);
+export default createPlugin(ruleName, ruleFunction);

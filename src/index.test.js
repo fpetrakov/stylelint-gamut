@@ -1,14 +1,15 @@
-"use strict";
+import { testRule } from "stylelint-test-rule-node";
+
+import plugin from "./index.js";
 
 const {
 	rule: { messages, ruleName },
-} = require("./index.js");
+} = plugin;
 
-// eslint-disable-next-line no-undef
 testRule({
 	ruleName,
 	config: [true],
-	plugins: ["./index.js"],
+	plugins: [plugin],
 	accept: [
 		{
 			code: "@media (color-gamut:p3) { a { color: lch(48% 82 283); } }",

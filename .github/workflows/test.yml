@@ -2,28 +2,23 @@ name: Test
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
+    branches:
+      - "*"
 env:
   FORCE_COLOR: 2
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version:
-          - 18
-          - 16
-    name: Node.js ${{ matrix.node-version }}
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v3
-      - name: Install Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: npm
-      - name: Install dependencies
-        run: npm install --ignore-scripts
-      - name: Run tests
-        run: npm test
+          version: latest
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: package.json
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm test
