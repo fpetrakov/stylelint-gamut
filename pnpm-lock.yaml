@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       colorjs.io:
-        specifier: ^0.4.5
-        version: 0.4.5
+        specifier: ^0.6.1
+        version: 0.6.1
     devDependencies:
       eslint:
         specifier: ^8.43.0
@@ -668,8 +668,8 @@ packages:
   colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
 
-  colorjs.io@0.4.5:
-    resolution: {integrity: sha512-yCtUNCmge7llyfd/Wou19PMAcf5yC3XXhgFoAh6zsO2pGswhUPBaaUh8jzgHnXtXuZyFKzXZNAnyF5i+apICow==}
+  colorjs.io@0.6.1:
+    resolution: {integrity: sha512-8lyR2wHzuIykCpqHKgluGsqQi5iDm3/a2IgP2GBZrasn2sBRkE4NOGsglZxWLs/jZQoNkmA/KM/8NV16rLUdBg==}
 
   commander@14.0.2:
     resolution: {integrity: sha512-TywoWNNRbhoD0BXs1P3ZEScW8W5iKrnbithIl0YH+uCmBd0QpPOA8yc82DS3BIE5Ma6FnBVUsJ7wVUDz4dvOWQ==}
@@ -3115,7 +3115,7 @@ snapshots:
 
   colorette@2.0.20: {}
 
-  colorjs.io@0.4.5: {}
+  colorjs.io@0.6.1: {}
 
   commander@14.0.2: {}
 
