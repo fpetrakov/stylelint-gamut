@@ -1,5 +1,6 @@
 *.yml
 *.yaml
-.husky
+.githooks
 .github
+.prettierignore
 node_modules
