@@ -1,12 +1,10 @@
-"use strict";
-
 /**
  * Get the index of a declaration's value
  *
  * @param {import('postcss').Declaration} decl
  * @returns {number}
  */
-const declarationValueIndex = (decl) => {
+export const declarationValueIndex = (decl) => {
 	const raws = decl.raws;
 
 	return [
@@ -30,7 +28,7 @@ const declarationValueIndex = (decl) => {
  * @param {string} property
  * @return {boolean} If `true`, the property is standard
  */
-const isStandardSyntaxProperty = (property) => {
+export const isStandardSyntaxProperty = (property) => {
 	// SCSS var (e.g. $var: x), list (e.g. $list: (x)) or map (e.g. $map: (key:value))
 	if (property.startsWith("$")) {
 		return false;
@@ -53,7 +51,7 @@ const isStandardSyntaxProperty = (property) => {
  * @param {import('postcss').Declaration} decl
  * @returns {boolean}
  */
-const isInColorGamutP3MediaQuery = (decl) => {
+export const isInColorGamutP3MediaQuery = (decl) => {
 	const parentMediaQuery = getMediaQueryParent(decl);
 
 	if (
@@ -70,7 +68,7 @@ const isInColorGamutP3MediaQuery = (decl) => {
  * @param {import('postcss').Declaration} decl
  * @returns {boolean}
  */
-const isInColorGamutRec2020MediaQuery = (decl) => {
+export const isInColorGamutRec2020MediaQuery = (decl) => {
 	const parentMediaQuery = getMediaQueryParent(decl);
 
 	if (
@@ -103,12 +101,4 @@ const getMediaQueryParent = (decl) => {
  */
 const isMediaQuery = (decl) => decl.type === "atrule" && decl.name === "media";
 
-const startsWithNumber = (str) => /^\d/.test(str);
-
-module.exports = {
-	isStandardSyntaxProperty,
-	declarationValueIndex,
-	isInColorGamutP3MediaQuery,
-	isInColorGamutRec2020MediaQuery,
-	startsWithNumber,
-};
+export const startsWithNumber = (str) => /^\d/.test(str);
