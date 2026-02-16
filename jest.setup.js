@@ -1,5 +1,3 @@
-"use strict";
-
-const { getTestRule } = require("jest-preset-stylelint");
+import { getTestRule } from "jest-preset-stylelint";
 
 global.testRule = getTestRule({ plugins: ["./src"] });

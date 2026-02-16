@@ -1,15 +1,13 @@
-"use strict";
+import stylelint from "stylelint";
+import Color from "colorjs.io";
 
-const stylelint = require("stylelint");
-const Color = require("colorjs.io").default;
-
-const {
+import {
 	isInColorGamutP3MediaQuery,
 	isStandardSyntaxProperty,
 	declarationValueIndex,
 	isInColorGamutRec2020MediaQuery,
 	startsWithNumber,
-} = require("./utils");
+} from "./utils.js";
 
 const ruleName = "gamut/color-no-out-gamut-range";
 
@@ -107,4 +105,7 @@ ruleFunction.ruleName = ruleName;
 ruleFunction.messages = messages;
 ruleFunction.meta = meta;
 
-module.exports = stylelint.createPlugin(ruleName, ruleFunction);
+const plugin = stylelint.createPlugin(ruleName, ruleFunction);
+
+export default plugin;
+export { ruleName, messages, meta };
