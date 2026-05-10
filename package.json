@@ -1,6 +1,6 @@
 {
 	"name": "stylelint-gamut",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "Stylelint plugin for working with different color spaces",
 	"type": "module",
 	"main": "src/index.js",
