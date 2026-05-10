@@ -44,19 +44,19 @@
 		"stylelint": "^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0"
 	},
 	"devDependencies": {
-		"eslint": "^8.43.0",
-		"eslint-config-prettier": "^9.0.0",
+		"eslint": "^8.57.1",
+		"eslint-config-prettier": "^9.1.2",
 		"eslint-config-standard": "^17.1.0",
-		"eslint-plugin-import": "^2.27.5",
-		"eslint-plugin-n": "^16.0.0",
-		"eslint-plugin-promise": "^6.1.1",
+		"eslint-plugin-import": "^2.32.0",
+		"eslint-plugin-n": "^16.6.2",
+		"eslint-plugin-promise": "^6.6.0",
 		"husky": "^8.0.3",
-		"jest": "^30.0.0",
-		"jest-cli": "^30.0.0",
-		"jest-preset-stylelint": "^9.0.0",
-		"lint-staged": "^15.0.2",
-		"prettier": "^3.0.3",
-		"stylelint": "^17.0.0"
+		"jest": "^30.4.2",
+		"jest-cli": "^30.4.2",
+		"jest-preset-stylelint": "^9.1.0",
+		"lint-staged": "^15.5.2",
+		"prettier": "^3.8.3",
+		"stylelint": "^17.11.0"
 	},
 	"dependencies": {
 		"colorjs.io": "^0.4.5"
