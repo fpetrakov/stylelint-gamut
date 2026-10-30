@@ -41,7 +41,7 @@
 	},
 	"homepage": "https://github.com/fpetrakov/stylelint-gamut#readme",
 	"peerDependencies": {
-		"stylelint": "^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0"
+		"stylelint": "^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0"
 	},
 	"devDependencies": {
 		"eslint": "^10.3.0",
@@ -57,7 +57,7 @@
 		"jest-preset-stylelint": "^9.1.0",
 		"lint-staged": "^17.0.3",
 		"prettier": "^3.8.3",
-		"stylelint": "^17.11.0"
+		"stylelint": "^18.0.0"
 	},
 	"dependencies": {
 		"colorjs.io": "^0.6.1"
