@@ -6,7 +6,7 @@
 	"main": "src/index.js",
 	"scripts": {
 		"format": "prettier --write .",
-		"lint": "eslint --fix *.js",
+		"lint": "eslint --fix",
 		"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
 		"prepare": "husky install"
 	},
@@ -50,6 +50,7 @@
 		"eslint-plugin-import": "^2.32.0",
 		"eslint-plugin-n": "^18.0.1",
 		"eslint-plugin-promise": "^7.3.0",
+		"globals": "^17.13.0",
 		"husky": "^9.1.7",
 		"jest": "^30.4.2",
 		"jest-cli": "^30.4.2",
