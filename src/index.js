@@ -19,6 +19,95 @@ const meta = {
 	url: "https://github.com/fpetrakov/stylelint-gamut/blob/master/src/README.md",
 };
 
+const getFunctionCalls = (value) => {
+	const matches = [];
+	const pattern = /(oklch|oklab|lab|lch|var)\s*\(/gi;
+
+	for (let match; (match = pattern.exec(value)); ) {
+		const start = match.index;
+		const openIndex = start + match[0].length - 1;
+		let depth = 0;
+		let end = -1;
+
+		for (let i = openIndex; i < value.length; i++) {
+			if (value[i] === "(") {
+				depth += 1;
+			} else if (value[i] === ")") {
+				depth -= 1;
+				if (depth === 0) {
+					end = i + 1;
+					break;
+				}
+			}
+		}
+
+		if (end !== -1) {
+			matches.push(value.slice(start, end));
+			pattern.lastIndex = end;
+		}
+	}
+
+	return matches;
+};
+
+const splitAtTopLevelComma = (value) => {
+	let depth = 0;
+
+	for (let i = 0; i < value.length; i++) {
+		const char = value[i];
+
+		if (char === "(") {
+			depth += 1;
+		} else if (char === ")") {
+			depth -= 1;
+		} else if (char === "," && depth === 0) {
+			return [value.slice(0, i), value.slice(i + 1)];
+		}
+	}
+
+	return [value, ""];
+};
+
+const startsWithVarFunction = (value) => /^var\s*\(\s*--/.test(value);
+
+const resolveCustomPropertyValue = (
+	value,
+	customProperties,
+	seen = new Set(),
+) => {
+	if (!startsWithVarFunction(value)) {
+		return value;
+	}
+
+	const inner = value.slice(value.indexOf("(") + 1, -1).trim();
+	const [name, fallback = ""] = splitAtTopLevelComma(inner);
+	const varName = name.trim();
+
+	if (seen.has(varName)) {
+		return "";
+	}
+
+	seen.add(varName);
+
+	if (customProperties[varName] && !customProperties[varName].inQuery) {
+		return resolveCustomPropertyValue(
+			customProperties[varName].value,
+			customProperties,
+			seen,
+		);
+	}
+
+	if (fallback.trim()) {
+		return resolveCustomPropertyValue(
+			fallback.trim(),
+			customProperties,
+			seen,
+		);
+	}
+
+	return "";
+};
+
 /** @type {import('stylelint').Rule} */
 const ruleFunction = (primary) => {
 	return (root, result) => {
@@ -35,11 +124,9 @@ const ruleFunction = (primary) => {
 		root.walkDecls((decl) => {
 			if (!isStandardSyntaxProperty(decl.prop)) return;
 
-			const values = decl.value.match(
-				/(oklch|oklab|lab|lch|var)\([^)]+\)/g,
-			);
+			const values = getFunctionCalls(decl.value);
 
-			if (!values) return;
+			if (!values.length) return;
 
 			// value is e.g. lch(48% 82 283 / 67%)
 			for (const value of values) {
@@ -48,26 +135,25 @@ const ruleFunction = (primary) => {
 
 			function check(value) {
 				const shouldBeIgnored =
-					!value.startsWith("var(--") &&
-					(value.includes("var(--") ||
+					!startsWithVarFunction(value) &&
+					(/var\s*\(\s*--/.test(value) ||
 						!startsWithNumber(value.split("(")[1]));
 
 				if (shouldBeIgnored) return;
 
-				let customPropValue;
-				if (value.startsWith("var(--")) {
-					const varName = value.slice(4, -1);
-					if (
-						customProperties[varName] &&
-						!customProperties[varName].inQuery
-					) {
-						customPropValue = customProperties[varName].value;
-					} else {
-						return;
-					}
-				}
+				const resolvedValue = resolveCustomPropertyValue(
+					value,
+					customProperties,
+				);
+				if (!resolvedValue) return;
 
-				const color = new Color(customPropValue || value);
+				let color;
+
+				try {
+					color = new Color(resolvedValue);
+				} catch {
+					return;
+				}
 
 				if (color.inGamut("srgb")) return;
 				if (color.inGamut("p3") && isInColorGamutP3MediaQuery(decl))
