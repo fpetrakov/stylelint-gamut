@@ -1,3 +1,3 @@
 import { getTestRule } from "jest-preset-stylelint";
 
-global.testRule = getTestRule({ plugins: ["./src"] });
+global.testRule = getTestRule({ plugins: ["./src/index.js"] });
