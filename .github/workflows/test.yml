@@ -2,28 +2,34 @@ name: Test
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
 env:
   FORCE_COLOR: 2
 jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      node_versions: ${{ steps.matrix.outputs.node_versions }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/setup@v3
+        with:
+          cache: true
+      - id: matrix
+        run: node .github/scripts/get-node-matrix.js
   test:
+    needs: discover
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        node-version:
-          - 22
-          - 20
+        node-version: ${{ fromJSON(needs.discover.outputs.node_versions) }}
     name: Node.js ${{ matrix.node-version }}
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v3
-      - name: Install Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v7
+      - uses: pnpm/setup@v3
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: npm
-      - name: Install dependencies
-        run: npm install --ignore-scripts
-      - name: Run tests
-        run: npm test
+          cache: true
+          runtime: node@${{ matrix.node-version }}
+      - run: pnpm test
