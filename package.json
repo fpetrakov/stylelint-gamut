@@ -43,6 +43,18 @@
 	"peerDependencies": {
 		"stylelint": "^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0"
 	},
+	"devEngines": {
+		"runtime": {
+			"name": "node",
+			"version": "^26.13",
+			"onFail": "download"
+		},
+		"packageManager": {
+			"name": "pnpm",
+			"version": "^12.18",
+			"onFail": "download"
+		}
+	},
 	"devDependencies": {
 		"eslint": "^10.3.0",
 		"eslint-config-prettier": "^10.1.8",
