@@ -14,9 +14,6 @@
 		"*.js": "eslint --fix",
 		".": "prettier -write"
 	},
-	"engines": {
-		"node": ">=20.19.0"
-	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/fpetrakov/stylelint-gamut.git"
@@ -42,6 +39,18 @@
 	"homepage": "https://github.com/fpetrakov/stylelint-gamut#readme",
 	"peerDependencies": {
 		"stylelint": "^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0"
+	},
+	"devEngines": {
+		"runtime": {
+			"name": "node",
+			"version": "^26.13",
+			"onFail": "download"
+		},
+		"packageManager": {
+			"name": "pnpm",
+			"version": "^12.18",
+			"onFail": "download"
+		}
 	},
 	"devDependencies": {
 		"eslint": "^10.3.0",
