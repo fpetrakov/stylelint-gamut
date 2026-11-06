@@ -1,5 +1,2 @@
 allowBuilds:
   unrs-resolver: false
-
-minimumReleaseAgeExclude:
-  - stylelint
