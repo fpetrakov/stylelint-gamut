@@ -101,4 +101,4 @@ const getMediaQueryParent = (decl) => {
  */
 const isMediaQuery = (decl) => decl.type === "atrule" && decl.name === "media";
 
-export const startsWithNumber = (str) => /^\d/.test(str);
+export const startsWithNumber = (str) => /^\d/.test(String(str).trim());

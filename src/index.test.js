@@ -89,9 +89,22 @@ testRule({
 			code: "html {--hover: oklch(58% 0.22 260 / 20%); @media (color-gamut: p3) {--hover: oklch(54% 0.27 260 / 0.2); } } ::selection { background: var(--hover); }",
 			description: "nested",
 		},
+		{
+			code: "@media (color-gamut: p3) { a { color: var(--brand-color, lch(48% 82 283)); } }",
+			description: "var fallback is allowed in p3 media query",
+		},
 	],
 
 	reject: [
+		{
+			code: "a { color: var(--brand-color, lch(48% 82 283)); }",
+			description: "var fallback out of srgb gamut",
+			message: messages.rejected("var(--brand-color, lch(48% 82 283))"),
+			line: 1,
+			column: 12,
+			endLine: 1,
+			endColumn: 47,
+		},
 		{
 			code: ":root { --my-var: lch(48% 82 283); }; a { color: var(--my-var); };",
 			description:
